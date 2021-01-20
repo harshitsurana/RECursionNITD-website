@@ -30,6 +30,7 @@ urlpatterns = [
     path('oauth/', include('social_django.urls', namespace='social')),
     path('forum/',include('forum.urls',namespace='forum')),
     path('events/',include('events.urls',namespace='events')),
+    path('class/',include('class_events.urls',namespace='class_events')),
     path('profile/',include('user_profile.urls',namespace='user_profile')),
     path('team/',include('team.urls',namespace='team')),
     path('experience/',include('interview_exp.urls',namespace='interview_exp')),

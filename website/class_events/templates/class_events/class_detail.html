@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+    RECursion Class
+{% endblock title %}
+{% block Class_active %}active{% endblock %}
+{% block content %}
+<body>
+
+    <div class="container" style="margin-top: 2%">
+    <h1 style="text-align: center;"> {{class.title}} 
+        {% if request.user.is_superuser %}
+        <a href="{% url 'class_events:class_update' class.id %}">(<i class="fa fa-pencil">Update</i>)</a>
+        {% endif %}
+    </h1>
+    <li>
+        <div class="jumbotron shadow-sm p-3 mb-5 bg-white rounded">
+                <h5>
+                    
+                    <ul>
+                        <li>
+                            Start Time: {{class.start_time}}
+                    </li>
+                    <br>
+                    <li>
+                            End Time: {{class.end_time}}
+                    </li>
+                    {% if class.link != Null%}
+                        <br>
+                        <li>
+                            Link: <a href="{{event.link}}">{{class.link}}</a>
+                                
+                        </li>
+                        {% endif %}
+                        {% if class.description != Null%}
+                        <br>
+                        <li>
+                                Description: <br><br>
+                                {{class.description|safe}}
+                        </li>
+                        {% endif %}
+                        
+                        <br>
+                        <br>                    
+                    </ul>
+                </h5>
+        </div>
+    </li>
+</div>
+
+
+</body>
+{% endblock %}

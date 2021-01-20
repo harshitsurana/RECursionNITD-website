@@ -30,6 +30,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     # 'members.apps.MembersConfig',
+    'class_events.apps.ClassEventsConfig',
     'events.apps.EventsConfig',
     'forum.apps.ForumConfig',
     'team.apps.TeamConfig',
@@ -44,7 +45,10 @@ INSTALLED_APPS = [
     'social_django',
     'widget_tweaks',
     'markdownx',
+    'crispy_forms',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -143,8 +147,8 @@ LOGOUT_REDIRECT_URL = 'home'
 LOGIN_REDIRECT_URL = 'home'
 
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = 'A'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'B'
 
 
 # Internationalization

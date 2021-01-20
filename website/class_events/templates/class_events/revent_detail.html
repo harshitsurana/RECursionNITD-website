@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+    RECursion Class
+{% endblock title %}
+{% block Class_active %}active{% endblock %}
+{% block content %}
+<body>
+
+    <div class="container" style="margin-top: 2%">
+    <h1 style="text-align: center;"> {{event.title}}
+        {% if request.user.is_superuser %}
+        <a href="{% url 'class_events:revent_update' event.id %}">(<i class="fa fa-pencil">Update</i>)</a>
+        {% endif %}
+    </h1>
+    <div class="container-fluid">
+        <div class="row">
+          <div class="col-xs-12 col-sm-6">
+            <div class="jumbotron shadow-sm p-3 mb-5 bg-white rounded">
+                <h5>
+                    
+                    <ul>
+                        <li>
+                            Start Time: {{event.start_time}}
+                    </li>
+                    <br>
+                    <li>
+                            End Time: {{event.end_time}}
+                    </li>
+                    {% if event.link != Null%}
+                        <br>
+                        <li>
+                            Link: <a href="{{event.link}}">{{event.link}}</a>
+                                
+                        </li>
+                        {% endif %}
+                        <br>
+                        <li>
+                                Description: <br><br>
+                                {{event.description|safe}}
+                        </li>
+                        
+                        
+                        <br>
+                        <br>                    
+                    </ul>
+                </h5>
+                 
+
+        </div>
+          </div>
+          <div class="col-xs-12 col-sm-6">
+            <div class="jumbotron shadow-sm p-3 mb-5 bg-white rounded">
+                {% if event.image.url != Null%}
+                        <div>
+                            <img src="{{ event.image.url }}" style="margin:0 auto ; border: solid 5px #343A3F; border-radius: 1%; width: 100%;">
+                        </div>                      
+                        {% endif %}
+            </div>
+          </div>  
+        </div>
+    </div>
+</div>
+
+
+</body>
+{% endblock %}

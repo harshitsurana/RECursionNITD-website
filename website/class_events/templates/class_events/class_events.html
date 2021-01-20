@@ -1,0 +1,287 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% block title %}
+    RECursion
+{% endblock title %}
+{% block Class_active %}active{% endblock %}
+{% block content %}
+<body>
+    <!-- For the top sub menu to select between various events -->
+    <div class="container" style="margin-top: 2%">
+        <div class="jumbotron shadow-sm p-3 mb-5 bg-white rounded">
+            <h2 style="text-align: center;">
+            <button class="btn" onclick="past()";><i class="fa fa-arrow-left"></i> Past</button>
+            <button class="btn" onclick="current()";>Current</button>
+            <button class="btn" onclick="upcoming()";> Upcoming <i class="fa fa-arrow-right"></i></button>
+            {% if request.user.is_superuser %} 
+            <button class="btn"><a href="{% url 'class_events:revent_create' %}"> Create Event</a></button>
+            <button class="btn"><a href="{% url 'class_events:class_create' %}"> Create Class</a></button>
+            {% endif %}
+            </h2>
+        </div>
+    </div>
+
+<div class="container" style="margin-top: 2%; display: block;" id="current">
+{% if ce or cc %}
+    <h1 style="text-align: center;"> Current Events</h1>
+    <br>
+    <div class="container-fluid">
+    <div class="row">
+    {% for event in ce %}
+    <div class="col-xs-12 col-sm-6">
+        <div class="jumbotron shadow-sm p-3 mb-5 bg-white rounded">
+            <h3><a href="{% url 'class_events:revent_detail' event.id  %}">{{event.title}}</a></h3>
+                <h5>
+                    
+                    <ul>
+                        <li>
+                            Start Time: {{event.start_time}}
+                    </li>
+                    <br>
+                    <li>
+                            End Time: {{event.end_time}}
+                    </li>
+                    {% if event.link != Null%}
+                        <br>
+                        <li>
+                            Event Link: <a href="{{event.link}}">{{event.link}}</a>
+                                
+                        </li>
+                        {% endif %}
+                        <br>
+                        <li>
+                            <a href="{% url 'class_events:revent_detail' event.id  %}">Know More...</a>
+                                <!-- Description: <br><br>
+                                {{event.description|safe}} -->
+                        </li>                
+                    </ul>
+                </h5>
+           </div>
+    </div>
+    {% endfor %}
+    {% for event in cc %}
+    <div class="col-xs-12 col-sm-6">
+        <div class="jumbotron shadow-sm p-3 mb-5 bg-white rounded">
+            <h3><a href="{% url 'class_events:class_detail' event.id  %}">{{event.title}}</a></h3>
+                <h5>
+                    
+                    <ul>
+                        <li>
+                            Start Time: {{event.start_time}}
+                    </li>
+                    <br>
+                    <li>
+                            End Time: {{event.end_time}}
+                    </li>
+                    {% if event.link != Null%}
+                        <br>
+                        <li>
+                            Link: <a href="{{event.link}}">{{event.link}}</a>
+                                
+                        </li>
+                        {% endif %}
+                        <br>
+                        <li>
+                            <a href="{% url 'class_events:class_detail' event.id  %}">Know More...</a>
+                                <!-- Description: <br><br>
+                                {{event.description|safe}} -->
+                        </li>               
+                    </ul>
+                </h5>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+    </div>
+{% else %}
+    <div class="jumbotron col-xs-12 col-sm-6 shadow-sm p-3 mb-5 bg-white rounded">
+        <h2 style="text-align: center;"> Prepare for Upcoming Events</h2>
+    </div>
+{% endif %}
+</div>
+
+<div class="container" style="margin-top: 2%; display: none;" id="upcoming">
+    {% if ue or uc %}
+    <h1 style="text-align: center;"> Upcoming Events</h1>
+    <br>
+    <div class="container-fluid">
+    <div class="row">
+    {% for event in ue %}
+    <div class="col-xs-12 col-sm-6">
+        <div class="jumbotron shadow-sm p-3 mb-5 bg-white rounded">
+            <h3><a href="{% url 'class_events:revent_detail' event.id  %}">{{event.title}}</a></h3>
+                <h5>
+                    
+                    <ul>
+                        <li>
+                            Start Time: {{event.start_time}}
+                    </li>
+                    <br>
+                    <li>
+                            End Time: {{event.end_time}}
+                    </li>
+                    {% if event.link != Null%}
+                        <br>
+                        <li>
+                            Event Link: <a href="{{event.link}}">{{event.link}}</a>
+                                
+                        </li>
+                        {% endif %}
+                        <br>
+                        <li>
+                            <a href="{% url 'class_events:revent_detail' event.id  %}">Know More...</a>
+                                <!-- Description: <br><br>
+                                {{event.description|safe}} -->
+                        </li>                   
+                    </ul>
+                </h5>
+            </div>
+        </div>
+    {% endfor %}
+    {% for event in uc %}
+    <div class="col-xs-12 col-sm-6">
+        <div class="jumbotron shadow-sm p-3 mb-5 bg-white rounded">
+            <h3><a href="{% url 'class_events:class_detail' event.id  %}">{{event.title}}</a></h3>
+                <h5>
+                    
+                    <ul>
+                        <li>
+                            Start Time: {{event.start_time}}
+                    </li>
+                    <br>
+                    <li>
+                            End Time: {{event.end_time}}
+                    </li>
+                    {% if event.link != Null%}
+                        <br>
+                        <li>
+                            Class Link: <a href="{{event.link}}">{{event.link}}</a>
+                                
+                        </li>
+                        {% endif %}
+                        <br>
+                        <li>
+                            <a href="{% url 'class_events:class_detail' event.id  %}">Know More...</a>
+                                <!-- Description: <br><br>
+                                {{event.description|safe}} -->
+                        </li>                   
+                    </ul>
+                </h5>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+{% else %}
+    <div class="jumbotron shadow-sm p-3 mb-5 bg-white rounded">
+        <h2 style="text-align: center;"> Prepare for Upcoming Events</h2>
+    </div>
+{% endif %}
+</div>
+
+<div class="container" style="display: none;" id="past">
+    {% if pe or pc %}
+    <h1 style="text-align: center;"> Past Events</h1>
+    <br>
+    <div class="container-fluid">
+        <div class="row">
+    {% for event in pe %}
+            <div class="col-xs-12 col-sm-6"> 
+                <div class="jumbotron shadow-sm p-3 mb-5 bg-white rounded">
+                    <h3><a href="{% url 'class_events:revent_detail' event.id  %}">{{event.title}}</a></h3>
+                        <h5>
+                            
+                            <ul>
+                                <li>
+                                    Start Time: {{event.start_time}}
+                            </li>
+                            <br>
+                            <li>
+                                    End Time: {{event.end_time}}
+                            </li>
+                            {% if event.link != Null%}
+                                <br>
+                                <li>
+                                    Link: <a href="{{event.link}}">{{event.link}}</a>
+                                        
+                                </li>
+                                {% endif %}
+                                <br>
+                                <li>
+                                    <a href="{% url 'class_events:revent_detail' event.id  %}">Know More...</a>
+                                        <!-- Description: <br><br> -->
+                                        <!-- {{event.description|safe}} -->
+                                </li>             
+                            </ul>
+                        </h5>
+                </div>
+            </div>
+    {% endfor %}
+    {% for event in pc %}
+    <div class="col-xs-12 col-sm-6">
+        <div class="jumbotron shadow-sm p-3 mb-5 bg-white rounded">
+            <h3><a href="{% url 'class_events:class_detail' event.id  %}">{{event.title}}</a></h3>
+                <h5>
+                    
+                    <ul>
+                        <li>
+                            Start Time: {{event.start_time}}
+                    </li>
+                    <br>
+                    <li>
+                            End Time: {{event.end_time}}
+                    </li>
+                    {% if event.link != Null%}
+                        <br>
+                        <li>
+                            Link: <a href="{{event.link}}">{{event.link}}</a>
+                                
+                        </li>
+                        {% endif %}
+                        <br>
+                        <li>
+                            <a href="{% url 'class_events:class_detail' event.id  %}">Know More...</a>
+                                <!-- Description: <br><br>
+                                {{event.description|safe}} -->
+                        </li>                    
+                    </ul>
+                </h5>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+</div>
+{% else %}
+    <div class="jumbotron shadow-sm p-3 mb-5 bg-white rounded">
+        <h2 style="text-align: center;"> Exciting Events Ahead</h2>
+    </div>
+{% endif %}
+</div>
+
+<script>
+    function past() {
+        document.getElementById("past").style.display = "block";
+        document.getElementById("current").style.display = "none";
+        document.getElementById("upcoming").style.display = "none";
+    }
+</script>
+
+<script>
+    function current() {
+        document.getElementById("current").style.display = "block";
+        document.getElementById("past").style.display = "none";
+        document.getElementById("upcoming").style.display = "none";
+    }
+</script>
+
+<script>
+    function upcoming() {
+        document.getElementById("upcoming").style.display = "block";
+        document.getElementById("current").style.display = "none";
+        document.getElementById("past").style.display = "none";
+    }
+</script>
+
+</body>
+{% endblock %}
